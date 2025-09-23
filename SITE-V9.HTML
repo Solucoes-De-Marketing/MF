@@ -17,7 +17,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
-        /* Estilos personalizados para complementar o Tailwind */
+        /* Estilos personalizados para complementar oo Tailwind */
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #111827; /* Fundo escuro (cinza-azulado) */
@@ -92,7 +92,7 @@
         .comparison-slider img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain; /* MODIFICADO: De 'cover' para 'contain' para mostrar a imagem toda */
             pointer-events: none; /* Impede que a imagem interfira no arrastar */
         }
         .comparison-before-wrapper {
@@ -103,6 +103,7 @@
             height: 100%;
             overflow: hidden;
             border-right: 3px solid white;
+            background-color: #1f2937; /* ADICIONADO: Cobre a imagem de "depois" que vaza por baixo */
         }
         .comparison-handle {
             position: absolute;
@@ -132,13 +133,7 @@
         <div class="container mx-auto flex justify-between items-center">
             <!-- LOGO DA SUA EMPRESA -->
             <a href="#" class="text-2xl font-bold flex items-center gap-2">
-                <!-- COMENTÁRIO IMPORTANTE:
-                Substitua o link da imagem abaixo pelo link do seu logo real.
-                Mantenha a tag <img> para exibir a imagem. -->
-                <img src="https://github.com/Solucoes-De-Marketing/MF/blob/main/images/logo_V1_no_bg.png?raw=true" alt="Logo da Sua Empresa" class="w-14 h-14">
-                
-                <!-- COMENTÁRIO IMPORTANTE:
-                Substitua o texto 'Teste Nome' pelo nome da sua empresa. -->
+                <img src="https://raw.githubusercontent.com/Solucoes-De-Marketing/MF/main/images/logo_V1_no_bg.png" alt="Logo da Sua Empresa" class="w-14 h-14">
                 Soluções De Marketing
             </a>
         </div>
@@ -238,7 +233,6 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    // observer.unobserve(entry.target);
                 } else {
                     entry.target.classList.remove('visible');
                 }
@@ -250,29 +244,23 @@
         const animatedElements = document.querySelectorAll('.scroll-animate');
         animatedElements.forEach(el => observer.observe(el));
 
-        // ===== DADOS DO PORTFÓLIO (NOVO FORMATO) =====
-        // COMENTÁRIO IMPORTANTE:
-        // Substitua os links de placeholder pelos links das suas imagens de "antes" e "depois".
+        // ===== DADOS DO PORTFÓLIO (CORRIGIDO) =====
         const portfolioItems = [
             { 
-                beforeSrc: 'https://placehold.co/800x600/ef4444/ffffff?text=ANTES', 
-                afterSrc: 'https://placehold.co/800x600/22c55e/ffffff?text=DEPOIS', 
-                alt: 'Comparação do Projeto 1' 
+                beforeSrc: 'https://raw.githubusercontent.com/Solucoes-De-Marketing/MF/main/imagens_02/PROJETO_04_01.jpeg', 
+                afterSrc: 'https://raw.githubusercontent.com/Solucoes-De-Marketing/MF/main/imagens_02/PROJETO_04_02.png'
             },
             { 
-                beforeSrc: 'https://placehold.co/800x600/f97316/ffffff?text=ANTES', 
-                afterSrc: 'https://placehold.co/800x600/3b82f6/ffffff?text=DEPOIS', 
-                alt: 'Comparação do Projeto 2' 
+                beforeSrc: 'https://raw.githubusercontent.com/Solucoes-De-Marketing/MF/main/imagens_02/PROJETO_05_01.jpg', 
+                afterSrc: 'https://raw.githubusercontent.com/Solucoes-De-Marketing/MF/main/imagens_02/PROJETO_06_02.png'
             },
             { 
-                beforeSrc: 'https://placehold.co/800x600/a855f7/ffffff?text=ANTES', 
-                afterSrc: 'https://placehold.co/800x600/eab308/ffffff?text=DEPOIS', 
-                alt: 'Comparação do Projeto 3' 
+                beforeSrc: 'https://raw.githubusercontent.com/Solucoes-De-Marketing/MF/main/imagens_02/PROJETO_07_01.jpg', 
+                afterSrc: 'https://raw.githubusercontent.com/Solucoes-De-Marketing/MF/main/imagens_02/PROJETO_07_05.png'
             },
             { 
-                beforeSrc: 'https://placehold.co/800x600/64748b/ffffff?text=ANTES', 
-                afterSrc: 'https://placehold.co/800x600/14b8a6/ffffff?text=DEPOIS', 
-                alt: 'Comparação do Projeto 4' 
+                beforeSrc: 'https://raw.githubusercontent.com/Solucoes-De-Marketing/MF/main/imagens_02/PROJETO_08_01.jpg', 
+                afterSrc: 'https://raw.githubusercontent.com/Solucoes-De-Marketing/MF/main/imagens_02/PROJETO_08_04.png'
             },
         ];
 
@@ -286,7 +274,6 @@
 
         // Criar slides e bolinhas
         portfolioItems.forEach((item, index) => {
-            // Cria o slide
             const slide = document.createElement('div');
             slide.className = 'absolute inset-0 w-full h-full transition-opacity duration-500 ease-in-out';
             slide.style.opacity = index === 0 ? '1' : '0';
@@ -294,9 +281,9 @@
 
             slide.innerHTML = `
                 <div class="comparison-slider" data-index="${index}">
-                    <img src="${item.afterSrc}" alt="${item.alt} - Depois">
+                    <img src="${item.afterSrc}" alt="">
                     <div class="comparison-before-wrapper">
-                        <img src="${item.beforeSrc}" alt="${item.alt} - Antes">
+                        <img src="${item.beforeSrc}" alt="">
                     </div>
                     <div class="comparison-handle">
                         <i data-lucide="grip-vertical"></i>
@@ -305,7 +292,6 @@
             `;
             slidesContainer.appendChild(slide);
 
-            // Cria a bolinha
             const dot = document.createElement('button');
             dot.className = `w-3 h-3 rounded-full transition-colors ${index === 0 ? 'bg-sky-400' : 'bg-gray-600 hover:bg-gray-500'}`;
             dot.addEventListener('click', () => goToSlide(index));
@@ -314,7 +300,7 @@
 
         const slides = slidesContainer.children;
         const dots = dotsContainer.children;
-        lucide.createIcons(); // Recriar ícones para os handles
+        lucide.createIcons(); 
 
         function goToSlide(index) {
             slides[currentSlide].style.opacity = '0';
@@ -338,35 +324,18 @@
             goToSlide((currentSlide - 1 + slides.length) % slides.length);
         });
 
-        // Lógica do slider de comparação
+        // ===== LÓGICA DO SLIDER DE COMPARAÇÃO (CORRIGIDA) =====
         document.querySelectorAll('.comparison-slider').forEach(slider => {
-            let isDragging = false;
-            
             const beforeWrapper = slider.querySelector('.comparison-before-wrapper');
             const handle = slider.querySelector('.comparison-handle');
 
-            const startDrag = (e) => {
-                isDragging = true;
-                slider.classList.add('dragging');
-            };
-
-            const stopDrag = () => {
-                isDragging = false;
-                slider.classList.remove('dragging');
-            };
-
+            // Função que move a barra
             const onDrag = (e) => {
-                if (!isDragging) return;
-                
-                // Previne o comportamento padrão (ex: seleção de texto)
                 e.preventDefault();
-
-                // Obtém a posição do mouse ou do toque
-                const clientX = e.clientX || e.touches[0].clientX;
+                const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
                 const rect = slider.getBoundingClientRect();
                 let x = clientX - rect.left;
 
-                // Limita o movimento dentro do contêiner
                 if (x < 0) x = 0;
                 if (x > rect.width) x = rect.width;
 
@@ -375,14 +344,28 @@
                 handle.style.left = `${percentage}%`;
             };
 
+            // Função que finaliza o arraste
+            const stopDrag = () => {
+                slider.classList.remove('dragging');
+                // IMPORTANTE: Remove os "ouvintes" da janela para evitar conflitos
+                window.removeEventListener('mousemove', onDrag);
+                window.removeEventListener('touchmove', onDrag);
+                window.removeEventListener('mouseup', stopDrag);
+                window.removeEventListener('touchend', stopDrag);
+            };
+            
+            // Função que inicia o arraste
+            const startDrag = (e) => {
+                slider.classList.add('dragging');
+                // IMPORTANTE: Adiciona os "ouvintes" na janela APENAS QUANDO o arraste começa
+                window.addEventListener('mousemove', onDrag);
+                window.addEventListener('touchmove', onDrag);
+                window.addEventListener('mouseup', stopDrag);
+                window.addEventListener('touchend', stopDrag);
+            };
+
             slider.addEventListener('mousedown', startDrag);
             slider.addEventListener('touchstart', startDrag);
-
-            window.addEventListener('mouseup', stopDrag);
-            window.addEventListener('touchend', stopDrag);
-            
-            window.addEventListener('mousemove', onDrag);
-            window.addEventListener('touchmove', onDrag);
         });
 
     </script>
