@@ -226,19 +226,11 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 40px;
-            height: 40px;
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 3px;
+            height: 100%;
+            background-color: white;
             pointer-events: none;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
             z-index: 5;
-        }
-        .comparison-handle i {
-            color: #111827;
         }
         
         /* Estilos da seção de depoimentos */
@@ -571,9 +563,7 @@
                         <div class="comparison-before-wrapper">
                             <img src="${item.beforeSrc}" alt="${item.alt} - Antes">
                         </div>
-                        <div class="comparison-handle">
-                            <i data-lucide="grip-vertical"></i>
-                        </div>
+                        <div class="comparison-handle"></div>
                     </div>
                 `;
                 slidesContainer.appendChild(slide);
